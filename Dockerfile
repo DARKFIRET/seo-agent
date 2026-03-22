@@ -6,8 +6,8 @@ WORKDIR /app
 # Включаем pnpm
 RUN corepack enable pnpm
 
-# Устанавливаем необходимые пакеты для сборки нативных модулей (esbuild, bcrypt, postgres и т.д.)
-RUN apk add --no-cache python3 make g++
+# Устанавливаем необходимые пакеты для сборки нативных модулей и совместимости SWC/esbuild
+RUN apk add --no-cache python3 make g++ libc6-compat
 
 # Копируем файлы зависимостей (включая скрытый .npmrc, если он есть)
 COPY package.json pnpm-lock.yaml tsconfig.json .npmrc* ./

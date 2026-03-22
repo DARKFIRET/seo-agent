@@ -1,22 +1,32 @@
-# Локальная разработка с локальным HTTPS
+# Конфигурация для локального хостинга и oo7.fun
 localhost, oo7.fun, www.oo7.fun {
-    
+    # Раскомментируйте, если сертификаты Let's Encrypt не выдаются (лимиты или порты закрыты)
+    # tls internal
 
-    # Указываем Caddy папку со статическими файлами фронтенда
     root * dist/spa
-    file_server
 
-
+    # 1. Запросы к API проксируем на Node.js (порт 3000)
     handle /api/* {
         reverse_proxy localhost:3000
     }
 
-    # Если запрошенного файла не существует (например, при переходе по ссылкам React Router), 
-    # Caddy отдаст index.html, чтобы React сам разобрался с роутингом
-    try_files {path} /index.html
+    # 2. Рендеринг фронтенда и статических файлов
+    handle {
+        # Сначала пробуем найти реальный файл в dist/spa, 
+        # если его нет — отдаем index.html (для React Router)
+        try_files {path} /index.html
+        file_server
+    }
 }
 
-# (Пример для продакшена на реальном сервере)
-# luminaagency.com, www.luminaagency.com {
-#     reverse_proxy localhost:3000
+# (Пример для продакшена на реальном сервере с авто-SSL)
+# oo7.fun, www.oo7.fun {
+#     root * dist/spa
+#     handle /api/* {
+#         reverse_proxy localhost:3000
+#     }
+#     handle {
+#         try_files {path} /index.html
+#         file_server
+#     }
 # }
