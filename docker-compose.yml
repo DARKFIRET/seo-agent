@@ -1,20 +1,37 @@
 version: "3.9"
 
 services:
-  postgres:
+  # Наше Node.js приложение
+  app:
+    build: .
+    container_name: seo_agent_app
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000" # Пробрасываем порт 3000 только для локальной машины (Caddy)
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://lumina:lumina_secret@db:5432/lumina
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./public/uploads:/app/public/uploads
+
+  # База данных PostgreSQL
+  db:
     image: postgres:16-alpine
-    container_name: lumina_db
+    container_name: seo_agent_db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-lumina}
-      POSTGRES_USER: ${POSTGRES_USER:-lumina}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-lumina_secret}
+      POSTGRES_DB: lumina
+      POSTGRES_USER: lumina
+      POSTGRES_PASSWORD: lumina_secret
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-lumina}"]
+      test: ["CMD-SHELL", "pg_isready -U lumina"]
       interval: 10s
       timeout: 5s
       retries: 5
