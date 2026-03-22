@@ -6,11 +6,14 @@ WORKDIR /app
 # Включаем pnpm
 RUN corepack enable pnpm
 
-# Копируем файлы зависимостей
-COPY package.json pnpm-lock.yaml tsconfig.json ./
+# Устанавливаем необходимые пакеты для сборки нативных модулей (esbuild, bcrypt, postgres и т.д.)
+RUN apk add --no-cache python3 make g++
 
-# Устанавливаем зависимости
-RUN pnpm install --frozen-lockfile
+# Копируем файлы зависимостей (включая скрытый .npmrc, если он есть)
+COPY package.json pnpm-lock.yaml tsconfig.json .npmrc* ./
+
+# Устанавливаем зависимости (без жесткой привязки к Windows-версиям пакетов из lockfile)
+RUN pnpm install --no-frozen-lockfile
 
 # Копируем исходный код
 COPY . .
