@@ -1,0 +1,22 @@
+# Локальная разработка с локальным HTTPS
+localhost, oo7.fun, www.oo7.fun {
+    
+
+    # Указываем Caddy папку со статическими файлами фронтенда
+    root * dist/spa
+    file_server
+
+
+    handle /api/* {
+        reverse_proxy localhost:3000
+    }
+
+    # Если запрошенного файла не существует (например, при переходе по ссылкам React Router), 
+    # Caddy отдаст index.html, чтобы React сам разобрался с роутингом
+    try_files {path} /index.html
+}
+
+# (Пример для продакшена на реальном сервере)
+# luminaagency.com, www.luminaagency.com {
+#     reverse_proxy localhost:3000
+# }
