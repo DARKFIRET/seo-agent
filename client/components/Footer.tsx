@@ -33,20 +33,23 @@ export function Footer() {
               <a
                 href="#"
                 className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors"
+                aria-label="LinkedIn"
               >
-                <Linkedin size={18} />
+                <Linkedin size={18} aria-hidden="true" />
               </a>
               <a
                 href="#"
                 className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors"
+                aria-label="Telegram"
               >
-                <Send size={18} />
+                <Send size={18} aria-hidden="true" />
               </a>
               <a
                 href="#"
                 className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors"
+                aria-label="Twitter"
               >
-                <Twitter size={18} />
+                <Twitter size={18} aria-hidden="true" />
               </a>
             </div>
           </div>

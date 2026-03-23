@@ -155,12 +155,13 @@ export default function Index() {
     <div className="flex flex-col min-h-screen">
       <Header onLeadClick={() => setIsModalOpen(true)} />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-background via-background to-secondary overflow-hidden relative">
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-background via-background to-secondary overflow-hidden relative">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
-            <motion.div {...fadeInUp}>
+            <div>
               <h1 className="text-5xl md:text-6xl font-bold text-foreground leading-tight mb-6">
                 Растите ваш бизнес с цифровым маркетингом
               </h1>
@@ -197,7 +198,7 @@ export default function Index() {
                   <p className="text-sm text-foreground/60">Лет опыта</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Right Visual */}
             <motion.div
@@ -260,8 +261,8 @@ export default function Index() {
                   key={idx}
                   {...fadeInUp}
                   className={`p-8 rounded-2xl border-2 cursor-pointer transition-all ${selectedService === idx
-                      ? "border-primary bg-primary/5"
-                      : "border-border hover:border-primary/50"
+                    ? "border-primary bg-primary/5"
+                    : "border-border hover:border-primary/50"
                     }`}
                   onClick={() => setSelectedService(idx)}
                 >
@@ -430,6 +431,7 @@ export default function Index() {
           </motion.div>
         </div>
       </section>
+      </main>
 
       <Footer />
 

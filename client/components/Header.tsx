@@ -69,8 +69,10 @@ export function Header({ onLeadClick }: HeaderProps) {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+          aria-label="Открыть меню навигации"
+          aria-expanded={isOpen}
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          {isOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
         </button>
       </nav>
 
