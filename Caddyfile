@@ -1,32 +1,27 @@
-# Конфигурация для локального хостинга и oo7.fun
+# Фикс 405 ошибки для oo7.fun
 localhost, oo7.fun, www.oo7.fun {
-    # Раскомментируйте, если сертификаты Let's Encrypt не выдаются (лимиты или порты закрыты)
+    # Чтобы браузер не ругался на локальный oo7.fun (если вы его прописали в hosts)
     # tls internal
 
+    # Ставим глобальный корень для статики
     root * dist/spa
 
-    # 1. Запросы к API проксируем на Node.js (порт 3000)
+    # ПРИОРИТЕТ 1: API запросы всегда на Node.js
+    # Используем handle /api/* для абсолютной изоляции
     handle /api/* {
         reverse_proxy localhost:3000
     }
 
-    # 2. Рендеринг фронтенда и статических файлов
+    # ПРИОРИТЕТ 1.5: Загруженные файлы (картинки кейсов и т.д.) на Node.js
+    handle /uploads/* {
+        reverse_proxy localhost:3000
+    }
+
+    # ПРИОРИТЕТ 2: Если запросили статику или SPA-маршрут (всё кроме /api/*)
     handle {
-        # Сначала пробуем найти реальный файл в dist/spa, 
-        # если его нет — отдаем index.html (для React Router)
+        # Сначала ищем реальный файл (картинка, css),
+        # если нет — кидаем в index.html (для React роутинга)
         try_files {path} /index.html
         file_server
     }
 }
-
-# (Пример для продакшена на реальном сервере с авто-SSL)
-# oo7.fun, www.oo7.fun {
-#     root * dist/spa
-#     handle /api/* {
-#         reverse_proxy localhost:3000
-#     }
-#     handle {
-#         try_files {path} /index.html
-#         file_server
-#     }
-# }
