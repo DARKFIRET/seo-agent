@@ -17,7 +17,7 @@ export function PlaceholderPage({
   seoDescription
 }: PlaceholderPageProps) {
   useSEO({
-    title: seoTitle || `${title} | Lumina Agency`,
+    title: seoTitle || `${title} | НОБЕРЛИН`,
     description: seoDescription || description,
   });
   return (

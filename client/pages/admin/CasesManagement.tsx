@@ -270,11 +270,10 @@ export default function CasesManagement() {
                       <td className="p-3 md:p-4">
                         <button
                           onClick={() => handleStatusToggle(item)}
-                          className={`px-2 md:px-3 py-1 rounded-full text-xs font-semibold transition-opacity hover:opacity-80 ${
-                            item.status === "Опубликовано"
+                          className={`px-2 md:px-3 py-1 rounded-full text-xs font-semibold transition-opacity hover:opacity-80 ${item.status === "Опубликовано"
                               ? "bg-green-100/50 text-green-700"
                               : "bg-yellow-100/50 text-yellow-700"
-                          }`}
+                            }`}
                         >
                           {item.status}
                         </button>

@@ -21,8 +21,10 @@ export function Header({ onLeadClick }: HeaderProps) {
 
   const navLinks = [
     { label: "О нас", href: "/about" },
+    { label: "Блог", href: "/blog" },
     { label: "Кейсы", href: "/cases" },
     { label: "Контакты", href: "/contacts" },
+    
   ];
 
   return (
@@ -38,12 +40,9 @@ export function Header({ onLeadClick }: HeaderProps) {
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center gap-2 font-bold text-xl text-primary group"
+          className="flex items-center group"
         >
-          <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center text-white font-bold text-sm">
-            LA
-          </div>
-          <span className="hidden sm:inline">Lumina Agency</span>
+          <img src="/logo.png" alt="Logo" className="h-14 w-auto" />
         </Link>
 
         {/* Desktop Menu */}

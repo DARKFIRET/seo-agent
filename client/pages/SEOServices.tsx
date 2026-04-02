@@ -21,8 +21,8 @@ const fadeInUp = {
 
 export default function SEOServices() {
   useSEO({
-    title: 'SEO продвижение сайта | Услуги SEO | Lumina Agency',
-    description: 'Профессиональное SEO продвижение сайта. Органический рост трафика за 3-6 месяцев. Техническое SEO, контент, линкбилдинг. Гарантированные результаты.',
+    title: 'SEO продвижение сайта в Ижевске | Услуги SEO | НОБЕРЛИН',
+    description: 'Профессиональное SEO продвижение сайта в Ижевске. Органический рост трафика за 3-6 месяцев. Техническое SEO, контент, линкбилдинг. Гарантированные результаты.',
     keywords: [
       'SEO продвижение',
       'услуги SEO',
@@ -32,18 +32,19 @@ export default function SEOServices() {
       'техническое SEO',
       'линкбилдинг',
       'контент для SEO',
+      'Ижевск',
     ],
     schema: {
       '@context': 'https://schema.org',
       '@type': 'Service',
-      name: 'SEO-продвижение',
+      name: 'SEO-продвижение в Ижевске',
       description: 'Органический рост трафика вашего сайта через современные методы SEO. Гарантированные результаты за 3-6 месяцев.',
       provider: {
         '@type': 'Organization',
-        name: 'Lumina Agency',
+        name: 'НОБЕРЛИН',
         url: 'https://luminaagency.com',
       },
-      areaServed: 'RU',
+      areaServed: 'Izhevsk',
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'SEO услуги',
@@ -309,8 +310,8 @@ export default function SEOServices() {
                 key={idx}
                 {...fadeInUp}
                 className={`rounded-xl p-8 transition-all ${pkg.highlighted
-                    ? "border-2 border-primary bg-primary/5 shadow-xl scale-105"
-                    : "border-2 border-border hover:border-primary/50"
+                  ? "border-2 border-primary bg-primary/5 shadow-xl scale-105"
+                  : "border-2 border-border hover:border-primary/50"
                   }`}
               >
                 <h3 className="text-2xl font-bold text-foreground mb-2">
@@ -332,8 +333,8 @@ export default function SEOServices() {
                 </ul>
                 <button
                   className={`w-full py-3 rounded-lg font-semibold transition-colors ${pkg.highlighted
-                      ? "bg-primary text-white hover:bg-primary/90"
-                      : "border-2 border-primary text-primary hover:bg-primary/5"
+                    ? "bg-primary text-white hover:bg-primary/90"
+                    : "border-2 border-primary text-primary hover:bg-primary/5"
                     }`}
                 >
                   Начать сейчас
@@ -349,7 +350,7 @@ export default function SEOServices() {
         <div className="max-w-4xl mx-auto">
           <motion.div {...fadeInUp} className="text-center mb-12">
             <h2 className="text-4xl font-bold text-foreground mb-4">
-              Получить бесплатный SEO-аудит сайта
+              Оставте заявку и получите бесплатный SEO-аудит сайта
             </h2>
             <p className="text-lg text-foreground/70">
               Оставьте заявку и мы проведем полный анализ вашего сайта за
@@ -449,7 +450,7 @@ export default function SEOServices() {
 
             <p className="text-sm text-foreground/60 text-center mt-4">
               Мы не передаем ваши данные третьим лицам. Ознакомьтесь с{" "}
-              <a href="#" className="text-primary hover:underline">
+              <a href="/privacy" className="text-primary hover:underline">
                 политикой конфиденциальности
               </a>
             </p>

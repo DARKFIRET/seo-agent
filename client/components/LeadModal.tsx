@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PhoneInput } from "@/components/PhoneInput";
+import { Link } from "react-router-dom";
 
 interface LeadModalProps {
   isOpen: boolean;
@@ -163,9 +164,12 @@ export function LeadModal({ isOpen, onClose }: LeadModalProps) {
                   )}
                 </button>
 
-                <p className="text-xs text-foreground/60 text-center">
-                  Мы не передаем данные третьим лицам
-                </p>
+                <Link
+                  to="/privacy"
+                  className="hover:text-primary transition-colors text-center block text-sm"
+                >
+                  Политика конфиденциальности
+                </Link>
               </form>
             )}
           </motion.div>

@@ -22,10 +22,11 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const navItems = [
     { path: "/admin", label: "Дашборд", icon: Home },
     { path: "/admin/leads", label: "Заявки (CRM)", icon: BarChart3 },
-    { path: "/admin/content", label: "Контент", icon: FileText },
+    // { path: "/admin/blog", label: "Блог", icon: FileText },
+    { path: "/admin/content", label: "Контент", icon: Settings },
     { path: "/admin/cases", label: "Кейсы", icon: Briefcase },
-    { path: "/admin/seo", label: "SEO", icon: Zap },
-    { path: "/admin/settings", label: "Настройки", icon: Settings },
+    // { path: "/admin/seo", label: "SEO", icon: Zap },
+    // { path: "/admin/settings", label: "Настройки", icon: Settings },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -46,10 +47,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
           {/* Logo */}
           <div className="p-4 md:p-6 border-b border-white/10">
             <Link to="/admin" className="flex items-center gap-2 md:gap-3 font-bold text-base md:text-lg">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                LA
-              </div>
-              <span className="hidden md:inline">Admin Panel</span>
+              <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
+              <span className="hidden md:inline">Admin</span>
             </Link>
           </div>
 

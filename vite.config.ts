@@ -9,7 +9,7 @@ import type { PluginOption } from "vite";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "0.0.0.0",
-    port: 8080,
+    port: 8000,
     strictPort: true,
     allowedHosts: true,
     fs: {
@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => ({
     outDir: "dist/spa",
   },
   plugins: [
-    react(), 
+    react(),
     expressPlugin(),
     visualizer({ open: false, filename: "dist/stats.html" }) as PluginOption
   ],

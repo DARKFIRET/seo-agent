@@ -19,7 +19,7 @@ const fadeInUp = {
 
 const team = [
   {
-    name: "Алексей Воронов",
+    name: "Александр Архипов",
     role: "Основатель и CEO",
     experience: "10 лет в digital-маркетинге",
     description:
@@ -75,28 +75,27 @@ const values = [
     icon: Award,
     title: "Экспертиза",
     description:
-      "7+ лет практики, 200+ реализованных проектов и постоянное обучение позволяют нам оставаться на шаг впереди рынка.",
+      "6+ лет практики, более 100 реализованных проектов в Ижевске и постоянное обучение позволяют нам быть лидерами в регионе.",
   },
 ];
 
 const milestones = [
-  { year: "2017", event: "Основание агентства в Москве" },
-  { year: "2019", event: "Первые 50 клиентов. Запуск SEO-отдела" },
-  { year: "2021", event: "Более 100 успешных проектов. Команда выросла до 15 человек" },
-  { year: "2023", event: "Запуск направления Яндекс Директ. Офис в Санкт-Петербурге" },
-  { year: "2025", event: "200+ клиентов по всей России. Рейтинг Рунета: топ-20 SEO-агентств" },
+  { year: "2020", event: "Основание агентства в Ижевске" },
+  { year: "2022", event: "Формирование команды экспертов и запуск направления SEO" },
+  { year: "2024", event: "Лидерство на рынке digital-услуг Удмуртии. Более 80 успешных кейсов" },
+  { year: "2026", event: "100+ реализованных проектов только внутри Ижевска" },
 ];
 
 export default function AboutPage() {
   useSEO({
-    title: "О нас | Lumina Agency — SEO и Яндекс Директ",
+    title: "О нас | НОБЕРЛИН — SEO и Яндекс Директ",
     description:
-      "Узнайте о Lumina Agency. Команда профессионалов с 7+ годами опыта в SEO и Яндекс Директ. Помогаем бизнесу расти через цифровой маркетинг.",
+      "Узнайте о НОБЕРЛИН. Команда профессионалов с 6+ годами опыта в SEO и Яндекс Директ. Помогаем бизнесу расти через цифровой маркетинг.",
     keywords: [
       "о нас",
-      "Lumina Agency",
+      "НОБЕРЛИН",
       "команда",
-      "SEO агентство Москва",
+      "SEO агентство Ижевск",
       "digital маркетинг",
     ],
   });
@@ -108,19 +107,19 @@ export default function AboutPage() {
         <div className="max-w-6xl mx-auto text-center">
           <motion.div {...fadeInUp}>
             <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-              Мы — <span className="text-primary">Lumina Agency</span>
+              Мы — <span className="text-primary">НОБЕРЛИН</span>
             </h1>
             <p className="text-xl text-foreground/70 max-w-3xl mx-auto mb-10">
-              Цифровое агентство, которое помогает бизнесу расти за счёт
-              органического трафика и эффективной рекламы с 2017 года.
+              Цифровое агентство из Ижевска, которое помогает местному бизнесу расти за счёт
+              органического трафика и эффективной рекламы с 2020 года.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { value: "7+", label: "лет на рынке" },
-              { value: "200+", label: "реализованных проектов" },
-              { value: "15+", label: "специалистов в команде" },
+              { value: "6+", label: "лет на рынке" },
+              { value: "100+", label: "реализованных проектов" },
+              { value: "10+", label: "специалистов в команде" },
               { value: "98%", label: "клиентов рекомендуют нас" },
             ].map((stat, idx) => (
               <motion.div
@@ -181,7 +180,7 @@ export default function AboutPage() {
                   расходы. Каждый рубль должен приносить результат.»
                 </blockquote>
                 <p className="font-semibold">Алексей Воронов</p>
-                <p className="text-white/70 text-sm">Основатель Lumina Agency</p>
+                <p className="text-white/70 text-sm">Основатель НОБЕРЛИН</p>
               </div>
             </motion.div>
           </div>
@@ -273,7 +272,7 @@ export default function AboutPage() {
               История компании
             </h2>
             <p className="text-lg text-foreground/70">
-              Путь от маленькой команды до ведущего агентства России
+              Путь от маленькой команды до лидера рынка в Ижевске
             </p>
           </motion.div>
 

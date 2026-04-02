@@ -16,10 +16,12 @@ const fadeInUp = {
 const emptyForm = {
   title: "",
   type: "Статья" as ContentItem["type"],
-  category: "Маркетинг",
+  category: "SEO",
   status: "Черновик" as ContentItem["status"],
   author: "",
   body: "",
+  imageUrl: "",
+  excerpt: "",
 };
 
 export default function ContentManagement() {
@@ -31,6 +33,7 @@ export default function ContentManagement() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState({ ...emptyForm });
   const [saving, setSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   // ── Fetch ──────────────────────────────────────────────────
   const fetchContents = useCallback(async () => {
@@ -64,12 +67,40 @@ export default function ContentManagement() {
     setFormData({
       title: item.title,
       type: item.type ?? "Статья",
-      category: item.category ?? "Маркетинг",
+      category: item.category ?? "SEO",
       status: item.status,
       author: item.author ?? "",
       body: item.body ?? "",
+      imageUrl: item.imageUrl ?? "",
+      excerpt: item.excerpt ?? "",
     });
     setShowModal(true);
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const base64 = event.target?.result as string;
+      try {
+        const res = await authFetch("/api/upload", {
+          method: "POST",
+          body: JSON.stringify({ image: base64, filename: file.name }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setFormData(prev => ({ ...prev, imageUrl: data.url }));
+        }
+      } catch (err) {
+        console.error("Image upload failed", err);
+      } finally {
+        setUploadingImage(false);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSave = async () => {
@@ -266,6 +297,41 @@ export default function ContentManagement() {
                 />
               </div>
 
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-foreground/70 mb-1">
+                  Обложка (URL или файл)
+                </label>
+                <div className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    value={formData.imageUrl}
+                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                    className="flex-1 px-4 py-2 border-2 border-border rounded-lg focus:border-primary focus:outline-none"
+                    placeholder="URL изображения"
+                  />
+                  <label className="cursor-pointer bg-secondary px-4 py-2 rounded-lg font-semibold hover:bg-secondary/80 transition-colors flex items-center gap-2 whitespace-nowrap">
+                    {uploadingImage ? <Loader2 size={18} className="animate-spin" /> : <Plus size={18} />}
+                    {uploadingImage ? "Загрузка..." : "Файл"}
+                    <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
+                  </label>
+                </div>
+                {formData.imageUrl && (
+                  <img src={formData.imageUrl} alt="Preview" className="w-20 h-20 object-cover rounded-lg border border-border" />
+                )}
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-foreground/70 mb-1">
+                  Краткое описание (для превью)
+                </label>
+                <textarea
+                  value={formData.excerpt}
+                  onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                  className="w-full px-4 py-2 border-2 border-border rounded-lg focus:border-primary focus:outline-none h-20"
+                  placeholder="Краткое содержание..."
+                />
+              </div>
+
               <div>
                 <label className="block text-sm font-semibold text-foreground/70 mb-1">
                   Тип
@@ -287,13 +353,17 @@ export default function ContentManagement() {
                 <label className="block text-sm font-semibold text-foreground/70 mb-1">
                   Категория
                 </label>
-                <input
-                  type="text"
+                <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full px-4 py-2 border-2 border-border rounded-lg focus:border-primary focus:outline-none"
-                  placeholder="Маркетинг"
-                />
+                  className="w-full px-3 py-2 border-2 border-border rounded-lg focus:border-primary focus:outline-none"
+                >
+                  <option value="SEO">SEO</option>
+                  <option value="Директ">Директ</option>
+                  <option value="Маркетинг">Маркетинг</option>
+                  <option value="Кейсы">Кейсы</option>
+                  <option value="Общее">Общее</option>
+                </select>
               </div>
 
               <div>
@@ -330,7 +400,7 @@ export default function ContentManagement() {
                   Содержимое
                 </label>
                 <RichTextEditor
-                  content={formData.body}
+                  value={formData.body}
                   onChange={(html) => setFormData({ ...formData, body: html })}
                 />
               </div>

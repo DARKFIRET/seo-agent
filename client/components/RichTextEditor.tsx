@@ -13,8 +13,10 @@ import {
   Link as LinkIcon,
   Undo,
   Redo,
+  Upload,
 } from "lucide-react";
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 interface RichTextEditorProps {
   value: string;
@@ -27,6 +29,9 @@ export function RichTextEditor({
   onChange,
   placeholder = "Введите содержание...",
 }: RichTextEditorProps) {
+  const { authFetch } = useAuth();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -40,7 +45,10 @@ export function RichTextEditor({
         },
       }),
       Image.configure({
-        allowBase64: true,
+        allowBase64: false,
+        HTMLAttributes: {
+          class: "article-image",
+        },
       }),
       Placeholder.configure({
         placeholder,
@@ -50,17 +58,107 @@ export function RichTextEditor({
       }),
     ],
     content: value,
+    editorProps: {
+      handlePaste: (view, event) => {
+        const items = Array.from(event.clipboardData?.items || []);
+        const imageItem = items.find((item) => item.type.startsWith("image/"));
+
+        if (imageItem) {
+          const file = imageItem.getAsFile();
+          if (file) {
+            uploadAndInsertImage(file);
+            return true;
+          }
+        }
+        return false;
+      },
+      handleDrop: (view, event, slice, moved) => {
+        if (!moved && event.dataTransfer?.files?.length) {
+          const file = event.dataTransfer.files[0];
+          if (file.type.startsWith("image/")) {
+            uploadAndInsertImage(file);
+            return true;
+          }
+        }
+        return false;
+      },
+    },
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
   });
 
+  const uploadAndInsertImage = useCallback(
+    async (file: File) => {
+      if (!editor) return;
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const base64 = e.target?.result as string;
+
+        try {
+          const res = await authFetch("/api/upload", {
+            method: "POST",
+            body: JSON.stringify({
+              image: base64,
+              filename: file.name,
+            }),
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            editor.chain().focus().setImage({ src: data.url }).run();
+          } else {
+            alert("Ошибка при загрузке изображения");
+          }
+        } catch (err) {
+          console.error("Upload error:", err);
+          alert("Ошибка при загрузке изображения");
+        }
+      };
+      reader.readAsDataURL(file);
+    },
+    [editor, authFetch],
+  );
+
+  // Sync value from props if it changes externally
+  useEffect(() => {
+    if (editor && value !== editor.getHTML()) {
+      editor.commands.setContent(value);
+    }
+  }, [value, editor]);
+
+  const handleFileUpload = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      // Validate file type
+      if (!file.type.startsWith("image/")) {
+        alert("Пожалуйста, выберите изображение");
+        return;
+      }
+
+      await uploadAndInsertImage(file);
+
+      // Reset input
+      event.target.value = "";
+    },
+    [uploadAndInsertImage],
+  );
+
   const addImage = useCallback(() => {
     if (!editor) return;
-
-    const url = window.prompt("URL картинки:");
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
+    
+    const choice = window.confirm("Загрузить изображение с компьютера? (Отмена — вставить ссылку)");
+    
+    if (choice) {
+      fileInputRef.current?.click();
+    } else {
+      const url = window.prompt("URL картинки:");
+      if (url) {
+        editor.chain().focus().setImage({ src: url }).run();
+      }
     }
   }, [editor]);
 
@@ -86,6 +184,13 @@ export function RichTextEditor({
 
   return (
     <div className="border-2 border-border rounded-lg overflow-hidden">
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileUpload}
+        className="hidden"
+        accept="image/*"
+      />
       {/* Toolbar */}
       <div className="bg-secondary/50 border-b border-border p-2 md:p-3 flex flex-wrap gap-1 md:gap-2">
         <button

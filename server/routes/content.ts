@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { db } from "../db/index.js";
 import { content } from "../db/schema.js";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and, or } from "drizzle-orm";
 import { requireAuth } from "../middleware/requireAuth.js";
 import { z } from "zod";
 
@@ -10,14 +10,45 @@ const router = Router();
 // Separate schemas: create requires title; update allows all optional
 const createContentSchema = z.object({
   title: z.string().min(1),
-  type: z.enum(["Статья", "Кейс", "Страница"]).optional(),
+  type: z.enum(["Статья", "Кейс", "Страница", "Новость"]).optional(),
   category: z.string().optional(),
   status: z.enum(["Опубликовано", "Черновик"]).optional(),
   author: z.string().optional(),
+  excerpt: z.string().optional(),
   body: z.string().optional(),
+  imageUrl: z.string().optional(),
+  tags: z.string().optional(),
+  readTime: z.number().optional(),
 });
 
 const updateContentSchema = createContentSchema.partial();
+
+// ── Public Routes ──────────────────────────────────────────
+
+// GET /api/content/public/news — public (только опубликованные новости)
+router.get("/public/news", async (_req, res) => {
+  try {
+    const rows = await db
+      .select()
+      .from(content)
+      .where(
+        and(
+          eq(content.status, "Опубликовано"),
+          // Временно разрешаем оба типа, чтобы статья точно появилась
+          or(
+            eq(content.type, "Новость"),
+            eq(content.type, "Статья")
+          )
+        )
+      )
+      .orderBy(desc(content.createdAt));
+    res.json({ news: rows });
+  } catch (error) {
+    res.status(500).json({ news: [] });
+  }
+});
+
+// ── Admin Routes ───────────────────────────────────────────
 
 // GET /api/content  — admin
 router.get("/", requireAuth, async (_req, res) => {
@@ -39,7 +70,7 @@ router.post("/", requireAuth, async (req, res) => {
   const { title, ...rest } = parsed.data;
   const [row] = await db
     .insert(content)
-    .values({ title, ...rest })
+    .values({ title, ...rest } as any)
     .returning();
   res.status(201).json({ content: row });
 });
@@ -55,7 +86,7 @@ router.put("/:id", requireAuth, async (req, res) => {
 
   const [row] = await db
     .update(content)
-    .set({ ...parsed.data, updatedAt: new Date() })
+    .set({ ...parsed.data, updatedAt: new Date() } as any)
     .where(eq(content.id, id))
     .returning();
 
@@ -73,7 +104,7 @@ router.patch("/:id/status", requireAuth, async (req, res) => {
 
   const [row] = await db
     .update(content)
-    .set({ status, updatedAt: new Date() })
+    .set({ status, updatedAt: new Date() } as any)
     .where(eq(content.id, id))
     .returning();
 

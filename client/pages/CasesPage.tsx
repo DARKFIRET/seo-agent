@@ -14,17 +14,17 @@ const fadeInUp = {
 
 // Gradient palette for cards without an image
 const GRADIENTS = [
-  "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-  "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-  "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-  "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-  "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
-  "linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%)",
+  "linear-gradient(135deg, #95C12B 0%, #7DA324 100%)",
+  "linear-gradient(135deg, #A8E063 0%, #56AB2F 100%)",
+  "linear-gradient(135deg, #D4FC79 0%, #96E6A1 100%)",
+  "linear-gradient(135deg, #95C12B 0%, #56AB2F 100%)",
+  "linear-gradient(135deg, #A8E063 0%, #7DA324 100%)",
+  "linear-gradient(135deg, #D4FC79 0%, #56AB2F 100%)",
 ];
 
 export default function CasesPage() {
   useSEO({
-    title: "Кейсы и результаты | SEO и Яндекс Директ | Lumina Agency",
+    title: "Кейсы и результаты | SEO и Яндекс Директ | НОБЕРЛИН",
     description:
       "Реальные проекты с реальными результатами. Смотрите, как мы помогли компаниям привлечь трафик и увеличить продажи.",
     keywords: [
@@ -47,7 +47,7 @@ export default function CasesPage() {
     fetch("/api/cases")
       .then((r) => r.json())
       .then((d) => setCases(d.cases ?? []))
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   }, []);
 
@@ -90,11 +90,10 @@ export default function CasesPage() {
                     <button
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
-                      className={`px-4 py-2 rounded-full font-medium transition-all ${
-                        selectedCategory === cat
-                          ? "bg-primary text-white"
-                          : "bg-secondary text-foreground hover:border-primary border-2 border-transparent"
-                      }`}
+                      className={`px-4 py-2 rounded-full font-medium transition-all ${selectedCategory === cat
+                        ? "bg-primary text-white"
+                        : "bg-secondary text-foreground hover:border-primary border-2 border-transparent"
+                        }`}
                     >
                       {cat}
                     </button>
@@ -109,11 +108,10 @@ export default function CasesPage() {
                     <button
                       key={niche}
                       onClick={() => setSelectedNiche(niche)}
-                      className={`px-4 py-2 rounded-full font-medium transition-all ${
-                        selectedNiche === niche
-                          ? "bg-primary text-white"
-                          : "bg-secondary text-foreground hover:border-primary border-2 border-transparent"
-                      }`}
+                      className={`px-4 py-2 rounded-full font-medium transition-all ${selectedNiche === niche
+                        ? "bg-primary text-white"
+                        : "bg-secondary text-foreground hover:border-primary border-2 border-transparent"
+                        }`}
                     >
                       {niche}
                     </button>

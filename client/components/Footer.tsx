@@ -18,11 +18,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center gap-2 font-bold text-lg mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                LA
-              </div>
-              <span>Lumina Agency</span>
+            <div className="flex items-center mb-4">
+              <img src="/logo.png" alt="Logo" className="h-20 w-auto" />
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-4">
               Цифровое маркетинговое агентство, специализирующееся на SEO и
@@ -106,20 +103,20 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/privacy"
                   className="hover:text-primary transition-colors"
                 >
                   Политика конфиденциальности
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/terms"
                   className="hover:text-primary transition-colors"
                 >
                   Условия использования
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -145,7 +142,7 @@ export function Footer() {
               </li>
               <li className="flex gap-3">
                 <MapPin size={18} className="text-primary flex-shrink-0 mt-0.5" />
-                <span>г. Москва, ул. Образцова, 15</span>
+                <span>г. Ижевск, ул. Нижняя, 30</span>
               </li>
             </ul>
           </div>
@@ -155,15 +152,15 @@ export function Footer() {
         <div className="border-t border-white/10 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-white/50">
-              © {currentYear} Lumina Agency. Все права защищены.
+              © {currentYear} НОБЕРЛИН. Все права защищены.
             </p>
             <div className="flex gap-6 text-sm text-white/50">
-              <a href="#" className="hover:text-primary transition-colors">
+              <Link to="/privacy" className="hover:text-primary transition-colors">
                 Политика конфиденциальности
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
+              </Link>
+              <Link to="/terms" className="hover:text-primary transition-colors">
                 Условия использования
-              </a>
+              </Link>
             </div>
           </div>
         </div>

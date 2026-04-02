@@ -1,10 +1,9 @@
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+
   /**
    * Tailwind CSS theme
    * tailwind.config.ts expects the following color variables to be expressed as HSL values.
@@ -20,7 +19,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 12 8% 8%;
 
-    --primary: 259 86% 52%;
+    --primary: 78 64% 46%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 97%;
@@ -29,7 +28,7 @@
     --muted: 220 10% 88%;
     --muted-foreground: 220 8% 40%;
 
-    --accent: 11 100% 56%;
+    --accent: 85 65% 40%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -37,7 +36,7 @@
 
     --border: 220 13% 91%;
     --input: 220 13% 98%;
-    --ring: 259 86% 52%;
+    --ring: 78 64% 46%;
 
     --radius: 0.5rem;
 
@@ -123,7 +122,7 @@
   @apply text-foreground outline-none;
 }
 
-.ProseMirror > * + * {
+.ProseMirror>*+* {
   @apply mt-4;
 }
 

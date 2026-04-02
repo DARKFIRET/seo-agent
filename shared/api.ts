@@ -61,11 +61,15 @@ export interface Case {
 export interface ContentItem {
   id: number;
   title: string;
-  type: "Статья" | "Кейс" | "Страница";
+  type: "Статья" | "Кейс" | "Страница" | "Новость";
   category: string | null;
   status: "Опубликовано" | "Черновик";
   author: string | null;
+  excerpt: string | null;
   body: string | null;
+  imageUrl: string | null;
+  tags: string | null;
+  readTime: number;
   views: number;
   createdAt: string;
   updatedAt: string;

@@ -22,8 +22,8 @@ const fadeInUp = {
 
 export default function YandexDirectServices() {
   useSEO({
-    title: 'Яндекс Директ | Контекстная реклама | Lumina Agency',
-    description: 'Управление контекстной рекламой в Яндекс Директ. Максимум конверсий, минимум затрат. Профессиональная настройка и оптимизация CPA.',
+    title: 'Яндекс Директ в Ижевске | Контекстная реклама | НОБЕРЛИН',
+    description: 'Управление контекстной рекламой в Яндекс Директ в Ижевске. Максимум конверсий, минимум затрат. Профессиональная настройка и оптимизация CPA.',
     keywords: [
       'Яндекс Директ',
       'контекстная реклама',
@@ -32,18 +32,19 @@ export default function YandexDirectServices() {
       'оптимизация CPA',
       'поисковая реклама',
       'интернет реклама',
+      'Ижевск',
     ],
     schema: {
       '@context': 'https://schema.org',
       '@type': 'Service',
-      name: 'Яндекс Директ',
+      name: 'Яндекс Директ в Ижевске',
       description: 'Настройка и ведение контекстной рекламы в Яндекс.Директ. Максимум конверсий, минимум затрат.',
       provider: {
         '@type': 'Organization',
-        name: 'Lumina Agency',
+        name: 'НОБЕРЛИН',
         url: 'https://luminaagency.com',
       },
-      areaServed: 'RU',
+      areaServed: 'Izhevsk',
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Услуги Яндекс Директ',
@@ -184,7 +185,7 @@ export default function YandexDirectServices() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 to-accent/10">
+      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-lime-50 to-accent/10">
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeInUp} className="text-center mb-8">
             <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
@@ -193,7 +194,7 @@ export default function YandexDirectServices() {
             <p className="text-xl text-foreground/70 max-w-3xl mx-auto mb-8">
               Привлекайте целевых клиентов через контекстную рекламу Яндекс
               Директ. Полный контроль над бюджетом, быстрые результаты и
-              гарантированный ROI.
+              гарантированная окупаемость рекламы.
             </p>
           </motion.div>
 
@@ -460,14 +461,14 @@ export default function YandexDirectServices() {
 
             <button
               type="submit"
-              className="w-full py-4 bg-gradient-to-r from-accent to-orange-600 text-white rounded-lg font-bold text-lg hover:shadow-lg transition-all"
+              className="w-full py-4 bg-gradient-to-r from-accent to-green-700 text-white rounded-lg font-bold text-lg hover:shadow-lg transition-all"
             >
               Рассчитать бюджет
             </button>
 
             <p className="text-sm text-foreground/60 text-center mt-4">
               Мы не передаем ваши данные третьим лицам. Ознакомьтесь с{" "}
-              <a href="#" className="text-accent hover:underline">
+              <a href="/privacy" className="text-accent hover:underline">
                 политикой конфиденциальности
               </a>
             </p>

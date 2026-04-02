@@ -43,11 +43,15 @@ export const cases = pgTable("cases", {
 export const content = pgTable("content", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
-  type: text("type").default("Статья"), // 'Статья' | 'Кейс' | 'Страница'
+  type: text("type").default("Статья"), // 'Статья' | 'Кейс' | 'Страница' | 'Новость'
   category: text("category"),
   status: text("status").default("Черновик").notNull(), // 'Опубликовано' | 'Черновик'
   author: text("author"),
+  excerpt: text("excerpt"),
   body: text("body"),
+  imageUrl: text("image_url"),
+  tags: text("tags"), // JSON string or comma separated
+  readTime: integer("read_time").default(5),
   views: integer("views").default(0),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),

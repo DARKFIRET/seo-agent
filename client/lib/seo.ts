@@ -132,7 +132,7 @@ function updateSchemaOrgData(schema: Record<string, unknown>) {
 export const organisationSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  name: 'Lumina Agency',
+  name: 'НОБЕРЛИН',
   description: 'Цифровое агентство. Помогаем компаниям привлекать целевой трафик через SEO и Яндекс Директ',
   image: 'https://luminaagency.com/logo.png',
   url: 'https://luminaagency.com',

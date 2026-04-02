@@ -71,8 +71,8 @@ const ParticleCore = () => {
     let colorpos = 0;
     let numConnected = 0;
 
-    const color1 = new THREE.Color(0x8b5cf6); // Primary roughly
-    const color2 = new THREE.Color(0xd946ef); // Accent roughly
+    const color1 = new THREE.Color(0x95C12B); // Primary
+    const color2 = new THREE.Color(0x7DA324); // Accent
 
     for (let i = 0; i < particleCount; i++) {
       for (let j = i + 1; j < particleCount; j++) {
@@ -132,7 +132,7 @@ const ParticleCore = () => {
         </bufferGeometry>
         <pointsMaterial
           size={0.12}
-          color="#a78bfa"
+          color="#A8E063"
           transparent
           opacity={0.8}
           sizeAttenuation

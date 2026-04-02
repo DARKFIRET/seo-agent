@@ -46,10 +46,8 @@ export default function AdminLogin() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
-            LA
-          </div>
-          <h1 className="text-2xl font-bold text-foreground">Lumina Admin</h1>
+          <img src="/logo.png" alt="Logo" className="h-20 w-auto mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-foreground">НОБЕРЛИН</h1>
           <p className="text-foreground/60 mt-1">Войдите в панель управления</p>
         </div>
 

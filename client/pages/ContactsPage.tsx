@@ -22,7 +22,7 @@ const fadeInUp = {
 
 export default function ContactsPage() {
   useSEO({
-    title: 'Контакты | Lumina Agency - Цифровой маркетинг',
+    title: 'Контакты | НОБЕРЛИН - Цифровой маркетинг',
     description: 'Свяжитесь с нами для консультации по SEO и Яндекс Директ. Помощь в развитии вашего бизнеса. Бесплатная первая консультация.',
     keywords: [
       'контакты',
@@ -98,7 +98,7 @@ export default function ContactsPage() {
     {
       icon: MapPin,
       label: "Адрес",
-      value: "г. Москва, ул. Образцова, 15",
+      value: "г. Ижевск, ул. Нижняя, 30",
       href: "#",
       description: "Посетите наш офис",
     },
@@ -189,7 +189,7 @@ export default function ContactsPage() {
               Найдите нас на карте
             </h2>
             <p className="text-lg text-foreground/70">
-              Наш офис находится в центре Москвы
+              Наш офис находится по адресу: г. Ижевск, ул. Нижняя, 30
             </p>
           </motion.div>
 
@@ -197,17 +197,7 @@ export default function ContactsPage() {
             {...fadeInUp}
             className="rounded-xl overflow-hidden border-2 border-border shadow-lg h-96"
           >
-            <iframe
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              allowFullScreen=""
-              aria-hidden="false"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.1234567890!2d37.62!3d55.75!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b53a1a1a1a1a1d%3A0x1a1a1a1a1a1a1a1a!2z0YPQuy4g0J7QsdCx0LDQt9C1LCAxNSwg0JzQuNGF0LrRgSDQvtCx0L3Qv9GD0LfQsA!5e0!3m2!1sru!2sru!4v1234567890"
-              style={{ border: 0 }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A076bf97585c4a67cc2ef4885a00ae7fbbc1fe9ca03149e0c0a2653221398a408&amp;source=constructor" width="100%" height="100%" frameborder="0"></iframe>
           </motion.div>
         </div>
       </section>
@@ -321,7 +311,7 @@ export default function ContactsPage() {
 
             <p className="text-sm text-foreground/60 text-center mt-4">
               Мы не передаем ваши данные третьим лицам. Ознакомьтесь с{" "}
-              <a href="#" className="text-primary hover:underline">
+              <a href="/privacy" className="text-primary hover:underline">
                 политикой конфиденциальности
               </a>
             </p>

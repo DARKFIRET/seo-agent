@@ -1,9 +1,10 @@
 import { Layout } from "@/components/Layout";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { Calendar, User, ArrowRight, Search } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Calendar, User, ArrowRight, Search, Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
-
+import type { ContentItem } from "@shared/api";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -12,22 +13,24 @@ const fadeInUp = {
   viewport: { once: true },
 };
 
-interface Article {
-  id: number;
-  title: string;
-  excerpt: string;
-  content: string;
-  category: string;
-  author: string;
-  date: string;
-  readTime: number;
-  image: string;
-  tags: string[];
-}
-
 export default function BlogPage() {
+  const [posts, setPosts] = useState<ContentItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("Все");
+
+  useEffect(() => {
+    fetch("/api/content/public/news")
+      .then(res => res.json())
+      .then(data => {
+        setPosts(data.news ?? []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
   useSEO({
-    title: 'Блог | Статьи о SEO и Яндекс Директ | Lumina Agency',
+    title: 'Блог | Статьи о SEO и Яндекс Директ | НОБЕРЛИН',
     description: 'Полезные статьи и гайды по SEO, Яндекс Директ и цифровому маркетингу. Советы и стратегии для развития вашего бизнеса.',
     keywords: [
       'SEO статьи',
@@ -39,126 +42,30 @@ export default function BlogPage() {
     ],
   });
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("Все");
+  const categories = ["Все", "SEO", "Директ", "Маркетинг", "Новости", "Кейсы"];
 
-  const articles: Article[] = [
-    {
-      id: 1,
-      title: "SEO-аудит 2024: полный чек-лист по оптимизации",
-      excerpt:
-        "Узнайте, как провести полный SEO-аудит вашего сайта и выявить основные проблемы, которые могут препятствовать ранжированию в поиске.",
-      content: "Полный текст статьи...",
-      category: "SEO",
-      author: "Иван Петров",
-      date: "15 Марта 2024",
-      readTime: 12,
-      image: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-      tags: ["SEO", "Аудит", "Оптимизация"],
-    },
-    {
-      id: 2,
-      title: "Яндекс Директ: как снизить CPA в 2 раза",
-      excerpt:
-        "Практические советы по оптимизации кампаний Яндекс Директ. Проверенные методы, которые работают в 2024 году.",
-      content: "Полный текст статьи...",
-      category: "Директ",
-      author: "Мария Сидорова",
-      date: "12 Марта 2024",
-      readTime: 8,
-      image: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-      tags: ["Директ", "CPA", "Оптимизация"],
-    },
-    {
-      id: 3,
-      title: "Контент-маркетинг: стратегия для B2B компаний",
-      excerpt:
-        "Как создавать контент, который привлекает целевых клиентов и увеличивает объем сделок в B2B сегменте.",
-      content: "Полный текст статьи...",
-      category: "Маркетинг",
-      author: "Алексей Иванов",
-      date: "10 Марта 2024",
-      readTime: 15,
-      image: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-      tags: ["Контент", "B2B", "Маркетинг"],
-    },
-    {
-      id: 4,
-      title: "Google Ads vs Яндекс Директ: какой выбрать?",
-      excerpt:
-        "Сравнение двух платформ контекстной рекламы. Преимущества и недостатки каждой, для какого бизнеса подходит.",
-      content: "Полный текст статьи...",
-      category: "Директ",
-      author: "Софья Морозова",
-      date: "8 Марта 2024",
-      readTime: 11,
-      image: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-      tags: ["Реклама", "Сравнение", "Директ"],
-    },
-    {
-      id: 5,
-      title: "Основные факторы ранжирования Google 2024",
-      excerpt:
-        "Актуальный список сигналов, которые влияют на позиции в поиске. Что изменилось за последний год и на что фокусироваться.",
-      content: "Полный текст статьи...",
-      category: "SEO",
-      author: "Иван Петров",
-      date: "5 Марта 2024",
-      readTime: 14,
-      image: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
-      tags: ["SEO", "Google", "Факторы"],
-    },
-    {
-      id: 6,
-      title: "Ретаргетинг: как вернуть потерянных клиентов",
-      excerpt:
-        "Стратегия ретаргетинга в Яндекс Директ и Google Ads. Как увеличить конверсию и снизить стоимость привлечения клиента.",
-      content: "Полный текст статьи...",
-      category: "Директ",
-      author: "Марк Сергеев",
-      date: "1 Марта 2024",
-      readTime: 9,
-      image: "linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%)",
-      tags: ["Ретаргетинг", "Конверсия", "Стратегия"],
-    },
-    {
-      id: 7,
-      title: "Как создать SEO-friendly URL структуру сайта",
-      excerpt:
-        "Подробное руководство по правильной структурированию URL адресов для лучшего ранжирования в поиске.",
-      content: "Полный текст статьи...",
-      category: "SEO",
-      author: "Елена Козлова",
-      date: "25 Февраля 2024",
-      readTime: 10,
-      image: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-      tags: ["SEO", "URL", "Структура"],
-    },
-    {
-      id: 8,
-      title: "Метрики для отслеживания эффективности рекламы",
-      excerpt:
-        "Какие показатели реально важны при оценке эффективности маркетинговых кампаний. Как настроить правильный трекинг.",
-      content: "Полный текст статьи...",
-      category: "Маркетинг",
-      author: "Мария Сидорова",
-      date: "20 Февраля 2024",
-      readTime: 13,
-      image: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-      tags: ["Аналитика", "Метрики", "Трекинг"],
-    },
-  ];
-
-  const categories = ["Все", "SEO", "Директ", "Маркетинг"];
-
-  const filteredArticles = articles.filter((article) => {
+  const filteredArticles = posts.filter((article) => {
     const categoryMatch =
       selectedCategory === "Все" || article.category === selectedCategory;
     const searchMatch =
       article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+      (article.excerpt || "").toLowerCase().includes(searchQuery.toLowerCase());
     return categoryMatch && searchMatch;
   });
+
+  const formatDate = (dateStr: string) => {
+    return new Date(dateStr).toLocaleDateString('ru-RU', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  };
+
+  const getFirstImage = (html: string | null) => {
+    if (!html) return null;
+    const match = html.match(/<img[^>]+src="([^">]+)"/);
+    return match ? match[1] : null;
+  };
 
   return (
     <Layout>
@@ -167,7 +74,7 @@ export default function BlogPage() {
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeInUp} className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-              Блог Lumina Agency
+              Блог НОБЕРЛИН
             </h1>
             <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
               Актуальные статьи об SEO, маркетинге и цифровом развитии вашего
@@ -206,8 +113,8 @@ export default function BlogPage() {
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-4 py-2 rounded-full font-medium transition-all ${selectedCategory === cat
-                      ? "bg-primary text-white"
-                      : "bg-secondary text-foreground hover:border-primary border-2 border-transparent"
+                    ? "bg-primary text-white"
+                    : "bg-secondary text-foreground hover:border-primary border-2 border-transparent"
                     }`}
                 >
                   {cat}
@@ -221,23 +128,27 @@ export default function BlogPage() {
       {/* Articles Grid */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-6xl mx-auto">
-          {filteredArticles.length > 0 ? (
+          {loading ? (
+             <div className="flex justify-center py-20"><Loader2 className="animate-spin text-primary" size={40} /></div>
+          ) : filteredArticles.length > 0 ? (
             <>
               {/* Featured Article */}
               {filteredArticles[0] && (
                 <motion.article
                   {...fadeInUp}
-                  className="mb-16 rounded-xl overflow-hidden border-2 border-border hover:border-primary transition-all hover:shadow-lg"
+                  className="mb-16 rounded-xl overflow-hidden border-2 border-border hover:border-primary transition-all hover:shadow-lg relative"
                 >
+                  <Link to={`/blog/${filteredArticles[0].id}`} className="absolute inset-0 z-10" />
                   <div className="grid md:grid-cols-2 gap-8">
                     {/* Image */}
                     <div
-                      className="h-64 md:h-full min-h-96"
+                      className="h-64 md:h-full min-h-96 bg-cover bg-center"
                       style={{
-                        background: filteredArticles[0].image,
+                        backgroundImage: (filteredArticles[0].imageUrl || getFirstImage(filteredArticles[0].body)) 
+                          ? `url(${filteredArticles[0].imageUrl || getFirstImage(filteredArticles[0].body)})` 
+                          : 'linear-gradient(135deg, #95C12B 0%, #7DA324 100%)',
                       }}
                     >
-                      <div className="absolute inset-0 bg-black/20" />
                     </div>
 
                     {/* Content */}
@@ -248,18 +159,18 @@ export default function BlogPage() {
                       <h2 className="text-3xl font-bold text-foreground mb-4">
                         {filteredArticles[0].title}
                       </h2>
-                      <p className="text-lg text-foreground/70 mb-6">
+                      <p className="text-lg text-foreground/70 mb-6 line-clamp-3">
                         {filteredArticles[0].excerpt}
                       </p>
 
                       <div className="flex items-center gap-6 mb-6 text-sm text-foreground/60 flex-wrap">
                         <div className="flex items-center gap-2">
                           <User size={16} />
-                          {filteredArticles[0].author}
+                          {filteredArticles[0].author || "НОБЕРЛИН"}
                         </div>
                         <div className="flex items-center gap-2">
                           <Calendar size={16} />
-                          {filteredArticles[0].date}
+                          {formatDate(filteredArticles[0].createdAt)}
                         </div>
                         <div className="text-primary font-semibold">
                           {filteredArticles[0].readTime} мин чтения
@@ -285,16 +196,18 @@ export default function BlogPage() {
                     <motion.article
                       key={article.id}
                       {...fadeInUp}
-                      className="rounded-xl overflow-hidden border-2 border-border hover:border-primary transition-all hover:shadow-lg flex flex-col"
+                      className="rounded-xl overflow-hidden border-2 border-border hover:border-primary transition-all hover:shadow-lg flex flex-col relative"
                     >
+                      <Link to={`/blog/${article.id}`} className="absolute inset-0 z-10" />
                       {/* Image */}
                       <div
-                        className="h-40"
+                        className="h-40 bg-cover bg-center"
                         style={{
-                          background: article.image,
+                           backgroundImage: (article.imageUrl || getFirstImage(article.body)) 
+                             ? `url(${article.imageUrl || getFirstImage(article.body)})` 
+                             : 'linear-gradient(135deg, #A8E063 0%, #56AB2F 100%)',
                         }}
                       >
-                        <div className="w-full h-full bg-black/10" />
                       </div>
 
                       {/* Content */}
@@ -314,26 +227,14 @@ export default function BlogPage() {
                         <div className="flex items-center gap-4 mb-4 text-xs text-foreground/60">
                           <div className="flex items-center gap-1">
                             <Calendar size={14} />
-                            {article.date}
+                            {formatDate(article.createdAt)}
                           </div>
                           <div className="text-primary font-semibold">
                             {article.readTime} мин
                           </div>
                         </div>
 
-                        {/* Tags */}
-                        <div className="mb-4 flex flex-wrap gap-2">
-                          {article.tags.slice(0, 2).map((tag, idx) => (
-                            <span
-                              key={idx}
-                              className="text-xs px-2 py-1 bg-secondary text-foreground/70 rounded"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-
-                        <button className="inline-flex items-center gap-2 px-4 py-2 border-2 border-primary text-primary rounded-lg font-semibold hover:bg-primary/5 transition-colors group text-sm">
+                        <button className="inline-flex items-center gap-2 px-4 py-2 border-2 border-primary text-primary rounded-lg font-semibold hover:bg-primary/5 transition-colors group text-sm mt-auto">
                           Читать
                           <ArrowRight
                             size={14}
@@ -360,7 +261,7 @@ export default function BlogPage() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary via-purple-600 to-accent text-white">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary via-[#84AD26] to-accent text-white">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div {...fadeInUp}>
             <h2 className="text-4xl font-bold mb-4">Подпишитесь на новости</h2>
